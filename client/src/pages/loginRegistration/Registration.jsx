@@ -1,14 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import PassiveButton from "../../components/buttons/passiveButton";
 
 const Registration = () => {
+  const [user, setUser] = useState({
+    Name: "",
+    Email: "",
+    Password: "",
+  });
   const [passwordEye, setPasswordEye] = useState(false);
+
+  const handleChange = (e) => {
+    user[e.target.id] = e.target.value;
+    setUser({ ...user });
+  };
 
   const handlePasswordClick = () => {
     setPasswordEye(!passwordEye);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    performFetch({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        user: {
+          Name: user.Name,
+          Email: user.Email,
+          Password: user.Password,
+        },
+      }),
+    });
+  };
   return (
     <>
       <Helmet>
@@ -22,32 +49,30 @@ const Registration = () => {
               <label htmlFor="name">First Name</label>
               <input
                 type="text"
-                name="firstName"
-                id="firstName"
+                name="Name"
+                id="Name"
                 placeholder="Your Name"
-                // onChange={handleChange}
+                onChange={handleChange}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="Email">Email</label>
               <input
                 type="text"
-                name="email"
-                id="email"
+                name="Email"
+                id="Email"
                 placeholder="Your Email"
-                // onChange={handleChange}
+                onChange={handleChange}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="password">
-                Password <span className="asterisk">*</span>
-              </label>
+              <label htmlFor="Password">Password</label>
               <input
                 type={passwordEye === false ? "password" : "text"}
-                name="password"
-                id="password"
+                name="Password"
+                id="Password"
                 placeholder="Password"
-                // onChange={handleChange}
+                onChange={handleChange}
               />
               <div className="AiEye">
                 {passwordEye === false ? (
@@ -57,6 +82,9 @@ const Registration = () => {
                 )}
               </div>
             </div>
+          </div>
+          <div className="">
+            <PassiveButton handleClick={handleSubmit} title="Register" />
           </div>
         </form>
       </div>
