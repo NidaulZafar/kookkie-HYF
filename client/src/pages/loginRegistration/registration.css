@@ -1,0 +1,37 @@
+.main-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 40vw;
+  margin: 20px;
+  position: relative;
+}
+
+.form-group label {
+  font-size: 1em;
+}
+
+.form-group input {
+  width: 100%;
+  border: 1px solid rgba(34, 34, 34, 1);
+  border-radius: 6px;
+  height: 5vh;
+}
+
+.form-group .eye-holder {
+  position: relative;
+}
+
+.form-group .AiEye {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Change the value as per your preference */
+  transform: translateY(-50%);
+  cursor: pointer;
+}

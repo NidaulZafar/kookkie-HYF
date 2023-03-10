@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Helmet } from "react-helmet";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-// import PassiveButton from "../../components/buttons/passiveButton";
 import useFetch from "../../hooks/useFetch";
 import { Link, useNavigate } from "react-router-dom";
+import "../../components/buttons/buttons.css";
+import "./registration.css";
 
 const Registration = () => {
   const [passwordEye, setPasswordEye] = useState(false);
@@ -26,6 +27,10 @@ const Registration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!formData.name || !formData.email || !formData.password) {
+      alert("Please provide name, email, and password.");
+      return;
+    }
     performFetch({
       method: "POST",
       headers: {
@@ -37,18 +42,8 @@ const Registration = () => {
 
   const buttonClass =
     formData.name && formData.email && formData.password
-      ? "filled-form-button"
-      : "empty-form-button";
-
-  // const [isFormFilled, setIsFormFilled] = useState(false);
-
-  // useEffect(() => {
-  //   setIsFormFilled(formData.name && formData.email && formData.password);
-  // }, [formData]);
-
-  // const buttonClass = useMemo(() => {
-  //   return isFormFilled ? "btn-filled" : "btn-empty";
-  // }, [isFormFilled]);
+      ? "outer filled-form-button"
+      : "outer empty-form-button";
 
   const handlePasswordClick = () => {
     setPasswordEye(!passwordEye);
@@ -66,48 +61,50 @@ const Registration = () => {
       <Helmet>
         <title>KOOKKIE | Registration</title>
       </Helmet>
-      <div>
+      <div className="main-div">
         <h3>Create Your Account</h3>
         <form method="POST" id="register-form" onSubmit={handleSubmit}>
-          <label htmlFor="name">First Name</label>
-          <input
-            type="text"
-            name="name"
-            id="Name"
-            placeholder="Your Name"
-            value={formData.name}
-            onChange={handleInputChange}
-          />
-
-          <label htmlFor="Email">Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Your Email"
-            value={formData.email}
-            onChange={handleInputChange}
-          />
-
-          <label htmlFor="Password">Password</label>
-          <input
-            type={passwordEye === false ? "password" : "text"}
-            name="password"
-            id="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleInputChange}
-          />
-          <div className="AiEye">
-            {passwordEye === false ? (
-              <AiFillEyeInvisible onClick={handlePasswordClick} />
-            ) : (
-              <AiFillEye onClick={handlePasswordClick} />
-            )}
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              name="name"
+              id="Name"
+              value={formData.name}
+              onChange={handleInputChange}
+            />
           </div>
-
+          <div className="form-group">
+            <label htmlFor="Email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value={formData.email}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="Password">Password</label>
+            <div className="eye-holder">
+              <input
+                type={passwordEye === false ? "password" : "text"}
+                name="password"
+                id="password"
+                value={formData.password}
+                onChange={handleInputChange}
+              />
+              <div className="AiEye">
+                {passwordEye === false ? (
+                  <AiFillEyeInvisible onClick={handlePasswordClick} />
+                ) : (
+                  <AiFillEye onClick={handlePasswordClick} />
+                )}
+              </div>
+            </div>
+          </div>
           <button type="submit" className={buttonClass} disabled={isLoading}>
-            {isLoading ? "Submitting..." : "Submit"}
+            {isLoading ? "Submitting..." : "Register"}
           </button>
         </form>
       </div>

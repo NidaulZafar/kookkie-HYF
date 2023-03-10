@@ -1,0 +1,15 @@
+body {
+  font-family: "Lato", serif;
+}
+
+.outer {
+  width: 20vw;
+  height: 7vh;
+  border: 1px solid #d9c639;
+  border-radius: 30px;
+  background-color: #fff;
+}
+
+.filled-form-button {
+  background-color: #d9c639;
+}

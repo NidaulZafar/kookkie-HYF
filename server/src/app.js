@@ -21,7 +21,7 @@ app.post("/api/user/create", async (req, res) => {
   if (!name || !email || !password) {
     return res
       .status(400)
-      .json({ error: "Please provide me name, email, and password." });
+      .json({ error: "Please provide name, email, and password." });
   }
 
   try {
